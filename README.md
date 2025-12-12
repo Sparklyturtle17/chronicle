@@ -3,7 +3,7 @@
 ## Viewing the App Remotely
 
 ```
-https://sparklyturtle17.github.io/
+https://sparklyturtle17.github.io/chronicle/
 ```
 
 github is hosting the app, but it will not update as you work, only when you save (as described below), and then it will take about 10 minutes to restart and show your changes
