@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.entry-a {
+    @apply 
+        text-red-600;
+}
+
+.entry-b {
+    @apply
+        text-green-600;
+}
+
+.entry-c {
+    @apply
+        text-blue-600;
+}
+
+.entry-d {
+    @apply
+        text-yellow-600;
+}
+
+h2 {
+    @apply
+        font-bold;
+}
