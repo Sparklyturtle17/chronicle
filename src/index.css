@@ -15,11 +15,8 @@
 
 .title {
   @apply 
-    text-4xl 
     font-bold 
     text-center 
-    text-black
-    text-shadow-lg
     text-shadow-green-500
     p-4 
     sticky 
@@ -27,6 +24,24 @@
     z-10 
     shadow
     shadow-green-500;
+}
+
+.title h1 {
+  @apply 
+    text-7xl 
+    font-bold 
+    text-center 
+    text-black
+    text-shadow-lg
+    text-shadow-green-500
+}
+
+.title p {
+  @apply 
+    text-green-500
+    px-4
+    bg-black/20
+    rounded-sm
 }
 
 .title img {
