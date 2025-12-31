@@ -1,11 +1,14 @@
 export default function EntriesContainer({ entriesItems }) {
   return (
     <div className="w-full">
-        {entriesItems.map((item, index) => (
-            <div key={index} id={item.title} className="entry-item">
-                <item.Component />
-            </div>
-        ))}
+      {entriesItems.map((item) => (
+        <div 
+          key={item.path} 
+          id={item.title} 
+          className="entry-item"
+          dangerouslySetInnerHTML={{ __html: item.html }}
+        />
+      ))}
     </div>
-  )
+  );
 }
