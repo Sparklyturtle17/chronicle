@@ -3,7 +3,6 @@ import Title from './Title.jsx'
 import Menu from './Menu.jsx'
 import EntriesContainer from './EntriesContainer.jsx'
 import './index.css'
-import './entries/entries.css'
 
 const htmlModules = import.meta.glob('./entries/*.html', { 
   query: '?raw',
@@ -12,8 +11,8 @@ const htmlModules = import.meta.glob('./entries/*.html', {
 });
 
 function extractMeta(html) {
-  const titleMatch = html.match(/data-title="([^"]+)"/);
-  const dateMatch = html.match(/data-create-date="([^"]+)"/);
+  const titleMatch = html.match(/<title>([^<]*)<\/title>/);
+  const dateMatch = html.match(/<meta\s+name="last-updated"\s+content="([^"]+)"/);
   
   return {
     title: titleMatch?.[1] ?? 'Untitled',
