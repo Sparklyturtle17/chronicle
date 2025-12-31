@@ -28,6 +28,7 @@
 
 .title h1 {
   @apply 
+    sm:pt-6
     text-7xl 
     font-bold 
     text-center 
