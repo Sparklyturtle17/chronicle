@@ -1,0 +1,1 @@
+import{j as c}from"./index-C3FeIQ1b.js";const r="Entry C";function n(){return c.jsxs("div",{className:"entry-c",children:[c.jsx("h2",{children:"Entry C"}),c.jsx("p",{children:"c cc ccc cccc ccccc cccccc ccccccc"})]})}export{n as default,r as title};
