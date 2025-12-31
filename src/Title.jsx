@@ -1,10 +1,8 @@
-import malawiMap from './images/Malawi-Map.png'
-
 export default function Title() {
   return (
     <div className="flex items-stretch gap-4">
       <div className="flex-shrink-0">
-        <img src={malawiMap} alt="Map of Malawi" className="h-24 w-auto" />
+        <img src="/chronicle/images/Malawi-Map.png" alt="Map of Malawi" className="h-24 w-auto" />
       </div>
       <div className="flex-grow flex flex-col items-center relative">
         <h1 className="text-7xl font-bold">Adventures in Malawi!</h1>
