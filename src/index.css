@@ -5,44 +5,48 @@
 
 /* Custom component styles */
 .fullpage {
-  @apply 
-    min-h-screen 
-    bg-linear-to-b
-      from-red-500
-      via-black
-      to-green-500
+  @apply min-h-screen;
+  background: linear-gradient(to bottom, 
+    black 0%, 
+    black 25%, 
+    red 33%, 
+    red 58%, 
+    green 75%, 
+    green 100%
+  );
 }
-
 .title {
   @apply 
     font-bold 
-    text-center 
-    text-shadow-green-500
+    text-center
     p-4 
     sticky 
     top-0 
     z-10 
     shadow
-    shadow-green-500;
+    shadow-gray-600;
 }
 
 .title h1 {
   @apply 
     sm:pt-6
-    text-7xl 
     font-bold 
     text-center 
-    text-black
+    text-green-600
     text-shadow-lg
-    text-shadow-green-500
+    text-shadow-gray-600;
+  font-size: min(7vw, 4rem);
+  margin-inline: auto;
 }
 
 .title p {
   @apply 
-    text-green-500
+    text-gray-400
     px-4
     bg-black/20
     rounded-sm
+    text-sm;
+  margin-inline: auto;
 }
 
 .title img {
@@ -91,4 +95,24 @@
     rounded
     flex-1
     flex-grow;
+}
+
+.entry-item > :first-child > :first-child {
+  @apply
+    flex
+    flex-row
+    items-end
+    justify-between
+}
+
+.entry-item > :first-child > :first-child > h2 {
+  @apply
+    text-xl
+    font-medium 
+}
+
+.entry-item > :first-child > :first-child > span {
+  @apply
+    text-sm
+    font-thin 
 }
