@@ -35,15 +35,17 @@ async function sendMergeNotification() {
             process.exit(1);
         }
 
-// Get commit information from environment
-const commitMessage = process.env.COMMIT_MESSAGE || 'A new entry has been added.';
-const commitDescription = process.env.COMMIT_DESCRIPTION || '';
+        // Get commit information from environment
+        const commitMessage = process.env.COMMIT_MESSAGE || 'A new entry has been added.';
+        const commitDescription = process.env.COMMIT_DESCRIPTION || 'A new entry has been added.';
 
-// Use description for merges, message for direct pushes
-const isMerge = commitMessage.startsWith('Merge');
-const displayMessage = isMerge && commitDescription 
-    ? commitDescription 
-    : commitMessage;
+        // Use description for merges, message for direct pushes
+        const isMerge = commitMessage.startsWith('Merge');
+
+
+        const displayMessage = (isMerge && commitDescription ? commitDescription : commitMessage)
+            .replace('[notify]', '')
+            .trim();
 
         // Configure email transporter
         // Using Gmail as example - you can change to your email service
