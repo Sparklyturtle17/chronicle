@@ -14,10 +14,11 @@ const htmlModules = import.meta.glob('./entries/*.html', {
 function extractMeta(html) {
   const titleMatch = html.match(/<title>([^<]*)<\/title>/);
   const dateMatch = html.match(/<meta\s+name="last-updated"\s+content="([^"]+)"/);
+  const prettyDate = dateMatch ? new Date(dateMatch[1]).toLocaleDateString() : null;
   
   return {
     title: titleMatch?.[1] ?? 'Untitled',
-    createDate: dateMatch?.[1] ?? '1970-01-01'
+    prettyDate: prettyDate || '1/1/1970'
   };
 }
 
@@ -27,10 +28,9 @@ const entries = Object.entries(htmlModules)
     html,
     path
   }))
-  .sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+  .sort((a, b) => new Date(b.prettyDate) - new Date(a.prettyDate));
 
 export default function App() {
-  const menuItems = entries.map(entry => entry.title);
 
   return (
     <div className="fullpage">
@@ -38,7 +38,7 @@ export default function App() {
         <Title></Title>
       </div>
       <div className="flex flex-col md:flex-row gap-4 m-4">
-        <Menu menuItems={menuItems} />
+        <Menu menuItems={entries} />
         <div>
           <EntriesContainer entriesItems={entries} />
           <Footer></Footer>
