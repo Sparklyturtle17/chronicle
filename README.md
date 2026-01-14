@@ -11,26 +11,47 @@ github is hosting the app, but it will not update as you work, only when you sav
 
 ## Warning!
 Rafiki should only edit files inside the folder /entries
+
 we can discuss and work together on files outside of that
 
 ## To Create Blog Entries:
 
 ### New Entries:
 From the github app, open and copy the template.html file
+
 Open the editor app and paste template html you copied
+
 Write html within the "replace" comments, dont forget the head title and create date tags
+
 Theres a preview button at the top right
+
 Copy file
+
 In github app, create new file entry-name.html paste contents from the editor
+
 In github app, commit
 
 ### Editing Published Entries:
 In github app, copy file contents of entry you want to change
+
 Paste in editor app and edit
+
 Theres a preview button at the top right
+
 Copy file
+
 In github app, create new file entry-name.html paste contents from the editor
+
 In github app, commit
+
+## Adding Photos to an Entry:
+Just give your file a helpful name (please for my OCD follow naming convention of Title-Case-With-Hyphens)
+
+Add image file to public/images/ directory
+
+The template.html includes an example
+
+Use that <img> tag, replacing the file name twice, once in the src filepath, and once as the alt title which will be what appears on the page if your image cannot load.
 
 ## For the Blog Container: 
 
