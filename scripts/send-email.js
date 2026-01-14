@@ -64,7 +64,7 @@ async function sendMergeNotification() {
             <p>Adventures in Malawi has been updated with a new post:</p>
             <p><strong>Message:</strong> ${displayMessage}</p>
             <p>Visit the live site to see the latest changes:</p>
-            <p><a href="https://chronicle.adventuresinmalawi.com">https://chronicle.adventuresinmalawi.com</a></p>
+            <p><a href="https://sparklyturtle17.github.io/chronicle/">https://sparklyturtle17.github.io/chronicle/</a></p>
         `;
 
         const emailText = `
