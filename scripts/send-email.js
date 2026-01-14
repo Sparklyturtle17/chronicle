@@ -35,8 +35,15 @@ async function sendMergeNotification() {
             process.exit(1);
         }
 
-        // Get commit information from environment
-        const commitMessage = process.env.COMMIT_MESSAGE || 'A new entry has been added.';
+// Get commit information from environment
+const commitMessage = process.env.COMMIT_MESSAGE || 'A new entry has been added.';
+const commitDescription = process.env.COMMIT_DESCRIPTION || '';
+
+// Use description for merges, message for direct pushes
+const isMerge = commitMessage.startsWith('Merge');
+const displayMessage = isMerge && commitDescription 
+    ? commitDescription 
+    : commitMessage;
 
         // Configure email transporter
         // Using Gmail as example - you can change to your email service
@@ -53,7 +60,7 @@ async function sendMergeNotification() {
         const emailHTML = `
             <h2>New Post to Adventures in Malawi!</h2>
             <p>Adventures in Malawi has been updated with a new post:</p>
-            <p><strong>Message:</strong> ${commitMessage}</p>
+            <p><strong>Message:</strong> ${displayMessage}</p>
             <p>Visit the live site to see the latest changes:</p>
             <p><a href="https://chronicle.adventuresinmalawi.com">https://chronicle.adventuresinmalawi.com</a></p>
         `;
@@ -62,7 +69,7 @@ async function sendMergeNotification() {
             New Post to Adventures in Malawi!
 
             Adventures in Malawi has been updated with a new post:
-            Message: ${commitMessage}
+            Message: ${displayMessage}
             Visit the live site to see the latest changes:
             https://chronicle.adventuresinmalawi.com
         `;
