@@ -7,8 +7,8 @@ export default function EntriesContainer({ entriesItems }) {
             className="entry-item">
           <div>
             <div>
-              <h2 className="">{item.title}</h2>
-              <span className="">{item.createDate}</span>
+              <h2 className="entry-title">{item.title}</h2>
+              <span className="entry-date">{item.prettyDate}</span>
             </div>
             <hr />
           </div>

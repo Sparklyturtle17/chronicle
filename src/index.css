@@ -54,32 +54,67 @@
 
 .menu {
   @apply 
-    gap-4 
     text-xl 
     font-bold 
     text-gray-900 
-    h-full 
-    text-center 
-    flex 
-    flex-row 
-    md:flex-col 
     sticky 
-    top-10 
-    z-10;
+    top-2
+    z-10
+    flex
+    flex-col
+    md:flex-row
+    md:gap-4
+    md:h-full;
+}
+
+.menu-toggle {
+  @apply 
+    md:hidden
+    p-2
+    border
+    border-gray-700
+    rounded-sm
+    bg-gray-200/50
+    hover:bg-gray-300
+    cursor-pointer
+    font-bold
+    text-2xl;
+}
+
+.menu-items {
+  @apply
+    hidden
+    md:flex
+    md:flex-col
+    md:gap-4
+    md:max-h-[calc(100vh-60px)]
+    md:overflow-y-auto;
+}
+
+.menu-items.open {
+  @apply
+    flex
+    flex-col
+    gap-2
+    bg-gray-100
+    p-2
+    rounded-sm
+    border
+    border-gray-700
+    max-h-[calc(100vh-60px)]
+    overflow-y-auto;
 }
 
 .menu-item {
   @apply 
-    flex-grow
-    md:flex-1
     p-2 
     border
     border-gray-700 
     rounded-sm
     bg-gray-200/50
     hover:bg-gray-300 
-    cursor-pointer 
-    flex-1;
+    cursor-pointer
+    text-center;
 }
 
 .entry-item {
@@ -103,13 +138,13 @@
     justify-between
 }
 
-.entry-item > :first-child > :first-child > h2 {
+.entry-title {
   @apply
     text-xl
     font-medium 
 }
 
-.entry-item > :first-child > :first-child > span {
+.entry-date {
   @apply
     text-sm
     font-thin 
