@@ -149,3 +149,9 @@
     text-sm
     font-thin 
 }
+
+.entry-item p {
+  @apply
+    indent-4
+    mb-4
+}
