@@ -22,7 +22,6 @@ jobs:
             "AWS_SECRET_ACCESS_KEY"
             "AWS_ACCESS_KEY_ID"
             "SECRET_KEY"
-            "PASSWORD"
             "BEGIN PRIVATE KEY"
             "BEGIN RSA PRIVATE KEY"
             "API_KEY"
