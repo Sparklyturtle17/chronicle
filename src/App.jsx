@@ -41,8 +41,10 @@ export default function App() {
         <Menu menuItems={entries} />
         <div>
           <EntriesContainer entriesItems={entries} />
-          <Footer></Footer>
         </div>
+      </div>
+      <div className="footer" id="footer-sticky">
+        <Footer></Footer>
       </div>
     </div>
   )

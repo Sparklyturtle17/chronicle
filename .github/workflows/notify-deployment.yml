@@ -5,7 +5,13 @@ on:
     branches: [main]
 
 jobs:
+  precheck:
+    uses: ./.github/workflows/precheck.yml
+    secrets:
+      PRECHECK_PATTERN: ${{ secrets.PRECHECK_PATTERN }}
+
   notify:
+    needs: precheck
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '[notify]') || contains(github.event.head_commit.body, '[notify]')
     steps:

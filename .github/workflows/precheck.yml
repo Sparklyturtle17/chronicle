@@ -1,0 +1,42 @@
+name: Pre-check for forbidden strings
+
+on:
+  workflow_call:
+    secrets:
+      PRECHECK_PATTERN:
+        required: false
+
+jobs:
+  precheck:
+    runs-on: ubuntu-latest
+    env:
+      PRECHECK_PATTERN: ${{ secrets.PRECHECK_PATTERN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pre-check for forbidden strings
+        run: |
+          set -euo pipefail
+          PATTERNS=(
+            "AWS_SECRET"
+            "AWS_SECRET_ACCESS_KEY"
+            "AWS_ACCESS_KEY_ID"
+            "SECRET_KEY"
+            "PASSWORD"
+            "BEGIN PRIVATE KEY"
+            "BEGIN RSA PRIVATE KEY"
+            "API_KEY"
+          )
+          if [ -n "${PRECHECK_PATTERN:-}" ]; then
+            PATTERNS+=("${PRECHECK_PATTERN}")
+          fi
+          pattern=$(printf "%s|" "${PATTERNS[@]}" | sed 's/|$//')
+          echo "Searching repository for forbidden patterns..."
+          set +e
+          matches=$(git grep -nIE --break --heading -e "$pattern" || true)
+          set -e
+          if [ -n "$matches" ]; then
+            echo "Pre-check failed: found matches for forbidden strings:"
+            echo "$matches"
+            exit 1
+          fi

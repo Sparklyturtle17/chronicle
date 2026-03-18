@@ -14,7 +14,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  precheck:
+    uses: ./.github/workflows/precheck.yml
+    secrets:
+      PRECHECK_PATTERN: ${{ secrets.PRECHECK_PATTERN }}
+
   build:
+    needs: precheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
