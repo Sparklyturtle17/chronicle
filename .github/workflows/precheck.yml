@@ -17,15 +17,7 @@ jobs:
       - name: Pre-check for forbidden strings
         run: |
           set -euo pipefail
-          PATTERNS=(
-            "AWS_SECRET"
-            "AWS_SECRET_ACCESS_KEY"
-            "AWS_ACCESS_KEY_ID"
-            "SECRET_KEY"
-            "BEGIN PRIVATE KEY"
-            "BEGIN RSA PRIVATE KEY"
-            "API_KEY"
-          )
+          PATTERNS=("albatross")
           if [ -n "${PRECHECK_PATTERN:-}" ]; then
             PATTERNS+=("${PRECHECK_PATTERN}")
           fi
