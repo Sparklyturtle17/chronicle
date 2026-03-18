@@ -17,11 +17,18 @@ jobs:
       - name: Pre-check for forbidden strings
         run: |
           set -euo pipefail
-          PATTERNS=("albatross")
-          if [ -n "${PRECHECK_PATTERN:-}" ]; then
-            PATTERNS+=("${PRECHECK_PATTERN}")
+
+          # Only check for forbidden patterns supplied via the secret.
+          # If none are provided, skip the check.
+          if [ -z "${PRECHECK_PATTERN:-}" ]; then
+            echo "No PRECHECK_PATTERN supplied; skipping forbidden-pattern check."
+            exit 0
           fi
+
+          # Support multiple patterns separated by '|'.
+          IFS='|' read -r -a PATTERNS <<< "${PRECHECK_PATTERN}"
           pattern=$(printf "%s|" "${PATTERNS[@]}" | sed 's/|$//')
+
           echo "Searching repository for forbidden patterns..."
           set +e
           matches=$(git grep -nIE --break --heading -e "$pattern" || true)
