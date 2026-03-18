@@ -12,13 +12,23 @@ const htmlModules = import.meta.glob('./entries/*.html', {
 });
 
 function extractMeta(html) {
-  const titleMatch = html.match(/<title>([^<]*)<\/title>/);
-  const dateMatch = html.match(/<meta\s+name="last-updated"\s+content="([^"]+)"/);
-  const prettyDate = dateMatch ? new Date(dateMatch[1]).toLocaleDateString() : null;
-  
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const title = doc.querySelector('title')?.textContent ?? 'Untitled';
+  const date = doc.querySelector('meta[name="last-updated"]')?.getAttribute('content');
+  const prettyDate = date ? new Date(date).toLocaleDateString() : '1/1/1970';
+
+  const textEl = doc.querySelector('.entry-text');
+  const mediaEl = doc.querySelector('.entry-media');
+
+  const mediaItems = mediaEl
+    ? Array.from(mediaEl.children).map((child) => child.outerHTML)
+    : [];
+
   return {
-    title: titleMatch?.[1] ?? 'Untitled',
-    prettyDate: prettyDate || '1/1/1970'
+    title,
+    prettyDate,
+    text: textEl?.innerHTML.trim() ?? '',
+    media: mediaItems
   };
 }
 
