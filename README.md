@@ -23,6 +23,21 @@ Open the editor app and paste template html you copied
 
 Write html within the "replace" comments, dont forget the head title and create date tags
 
+#### WE NOW HAVE TWO DIVS 
+- text goes in the first one, you can format it with paragraphs, italics, bold, lists, whatever you want if you want
+- all media items can go in the second one and they will get their own scrollable section either to the right of or below the text based on screen size
+
+- make sure the divs have the correct classname for it to work
+
+- I didnt implement it yet for any entry except week 10, so you could see if you like it this way or not, if you do, just create the second media div in those entries and factor out the media items into it, but for right now it should leave the formatting kiddo and I did together as it is
+
+#### WE NOW HAVE NAME SAFETY
+
+If you try to write a forbidden name, it should give you an error message and not even let you commit until you fix it
+One day I will make it automatically fix it for you
+
+#### now proceeed with your regularly scheduled programming...
+
 Theres a preview button at the top right
 
 Copy file
