@@ -1,5 +1,8 @@
 # Chronicle
 
+## Requests:
+put them here and prioritize them
+
 ## Viewing the App Remotely
 
 ```
