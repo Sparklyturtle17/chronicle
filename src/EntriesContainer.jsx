@@ -32,7 +32,7 @@ function EntryItem({ item }) {
     <div className="entry-item">
       <div>
         <div>
-          <h2 className="entry-title">{item.title}</h2>
+          <h2 className="entry-title" id={item.title}>{item.title}</h2>
           <span className="entry-date">{item.prettyDate}</span>
         </div>
         <hr />
