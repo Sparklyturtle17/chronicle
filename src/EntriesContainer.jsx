@@ -21,6 +21,9 @@ function EntryItem({ item }) {
     mutationObserver.observe(textRef.current, { childList: true, subtree: true });
 
     window.addEventListener('resize', syncHeight);
+
+    console.log(item.comments);
+
     return () => {
       window.removeEventListener('resize', syncHeight);
       resizeObserver.disconnect();
@@ -59,6 +62,31 @@ function EntryItem({ item }) {
                   className="media-frame overflow-hidden rounded border border-gray-300 bg-gray-50"
                 >
                   <div dangerouslySetInnerHTML={{ __html: html }} />
+                </div>
+              ))}
+            </div>
+          </aside>
+        )}
+
+        {item.comments.length > 0 && (
+          <aside
+            className="entry-comments mt-4 md:mt-0 md:w-96 flex-shrink-0 overflow-y-auto"
+          >
+            <hr />
+            <div>
+              <h3>Messages</h3>
+              <span>TBD Send Message Button</span>
+            </div>
+            <hr />
+            <div className="space-y-4">
+              {item.comments.map((comment) => (
+                <div
+                  key={comment.path}
+                  className="overflow-hidden rounded border border-gray-300 bg-gray-50"
+                >
+                  <h4>{comment.sender}~</h4>
+                  <div dangerouslySetInnerHTML={{ __html: comment.text }} />
+                  <span>~{comment.prettyDate}</span>
                 </div>
               ))}
             </div>
