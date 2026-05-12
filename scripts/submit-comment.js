@@ -13,7 +13,7 @@ app.use(express.json());
 const GITHUB_TOKEN = process.env.COMMENT_TOKEN; // Set this in your environment
 const REPO_OWNER = 'Sparklyturtle17';
 const REPO_NAME = 'chronicle';
-const BRANCH_BASE = 'commentsAsJson';
+const BRANCH_BASE = 'main';
 const COMMENTS_FILE_PATH = 'public/comments.json'; // Path in the repo
 
 // Initialize Octokit with token
@@ -63,7 +63,7 @@ app.post('/submit-comment', async (req, res) => {
     await octokit.git.createRef({
       owner: REPO_OWNER,
       repo: REPO_NAME,
-      ref: `refs/heads/commentsAsJson`,
+      ref: `refs/heads/main`,
       sha: baseRef.object.sha,
     });
 

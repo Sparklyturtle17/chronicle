@@ -52,7 +52,7 @@ function EntryItem({ item, comments }) {
       }
       const result = await response.json();
       if (result.success) {
-        alert(`Comment submitted! PR: ${result.prUrl}`);
+        alert(`Comment submitted for approval!`);
         setName('');
         setEmail('');
         setComment('');
@@ -104,7 +104,16 @@ function EntryItem({ item, comments }) {
           </aside>
         )}
         <aside>
-          <form onSubmit={handleSubmit}>
+          <div>
+            <h3>Comments</h3>
+            {comments.sort((a, b) => new Date(a.date) - new Date(b.date)).map((c, idx) => (
+              <div key={idx}>
+                <hr />
+                <strong>{c.name} ~</strong><br/>{c.comment}  <br/><i>~ on {new Date(c.date).toLocaleDateString()}</i>
+              </div>
+            ))}
+          </div>
+          <form className="media-frame p-4 rounded border border-gray-300 bg-gray-50 mb-4" onSubmit={handleSubmit}>
             <div>
               <label>Name:</label>
               <input
@@ -112,14 +121,7 @@ function EntryItem({ item, comments }) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-              />
-            </div>
-            <div>
-              <label>Email (optional):</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                className="border border-gray-300 rounded-sm m-1"
               />
             </div>
             <div>
@@ -128,20 +130,13 @@ function EntryItem({ item, comments }) {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 required
+                className="border border-gray-300 rounded-sm m-1 p-1"
               />
             </div>
-            <button type="submit" disabled={loading}>
+            <button className="malawiFlag text-white font-bold p-1 rounded" type="submit" disabled={loading}>
               {loading ? 'Submitting...' : 'Submit Comment'}
             </button>
           </form>
-          <div>
-            <h3>Comments</h3>
-            {comments.map((c, idx) => (
-              <div key={idx}>
-                <strong>{c.name}</strong> on {new Date(c.date).toLocaleDateString()}: {c.comment}
-              </div>
-            ))}
-          </div>
         </aside>
       </div>
     </div>

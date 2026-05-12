@@ -25,6 +25,17 @@
     shadow-gray-600;
 }
 
+.malawiFlag {
+  background: linear-gradient(to bottom, 
+    black 0%, 
+    black 25%, 
+    red 33%, 
+    red 58%, 
+    green 75%, 
+    green 100%
+  );
+}
+
 .title h1 {
   @apply 
     sm:pt-6

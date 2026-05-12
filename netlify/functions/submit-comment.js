@@ -24,7 +24,7 @@ exports.handler = async (event, context) => {
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Set in Netlify environment variables
     const REPO_OWNER = 'Sparklyturtle17';
     const REPO_NAME = 'chronicle';
-    const BRANCH_BASE = 'commentsAsJson';
+    const BRANCH_BASE = 'main';
     const COMMENTS_FILE_PATH = 'public/comments.json';
 
     // Initialize Octokit
