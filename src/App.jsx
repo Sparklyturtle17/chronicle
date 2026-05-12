@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Title from './Title.jsx'
 import Menu from './Menu.jsx'
 import EntriesContainer from './EntriesContainer.jsx'
 import Footer from './Footer.jsx'
 import './index.css'
+import Octokat from "octokat"
 
 const htmlModules = import.meta.glob('./entries/*.html', { 
   query: '?raw',
@@ -77,6 +78,15 @@ const entries = Object.entries(htmlModules)
 
 
 export default function App() {
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const commentsUrl = `${import.meta.env.BASE_URL}comments.json`;
+    fetch(commentsUrl)
+      .then(res => res.json())
+      .then(setComments)
+      .catch(() => setComments([])); // in case file not found
+  }, []);
 
   return (
     <div className="fullpage">
@@ -86,7 +96,7 @@ export default function App() {
       <div className="flex flex-col md:flex-row gap-4 m-4">
         <Menu menuItems={entries} />
         <div>
-          <EntriesContainer entriesItems={entries} />
+          <EntriesContainer entriesItems={entries} comments={comments} />
         </div>
       </div>
       <div className="footer" id="footer-sticky">

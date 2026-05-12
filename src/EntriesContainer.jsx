@@ -1,8 +1,12 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
-function EntryItem({ item }) {
+function EntryItem({ item, comments }) {
   const textRef = useRef(null);
   const [textHeight, setTextHeight] = useState(0);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [comment, setComment] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useLayoutEffect(() => {
     if (!textRef.current) return;
@@ -30,6 +34,41 @@ function EntryItem({ item }) {
       mutationObserver.disconnect();
     };
   }, [item.text, item.media.length]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !comment) {
+      alert('Please fill name and comment');
+      return;
+    }
+    setLoading(true);
+    try {
+      const functionUrl = '/.netlify/functions/submit-comment';
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, comment, entrySlug: item.title }),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || response.statusText);
+      }
+      const result = await response.json();
+      if (result.success) {
+        alert(`Comment submitted for approval!`);
+        setName('');
+        setEmail('');
+        setComment('');
+      } else {
+        alert('Error: ' + result.error);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error submitting comment: ' + (error.message || 'Unknown error'));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="entry-item">
@@ -67,41 +106,51 @@ function EntryItem({ item }) {
             </div>
           </aside>
         )}
-
-        {item.comments.length > 0 && (
-          <aside
-            className="entry-comments mt-4 md:mt-0 md:w-96 flex-shrink-0 overflow-y-auto"
-          >
-            <hr />
+        <aside>
+          <div>
+            <h3>Comments</h3>
+            {comments.sort((a, b) => new Date(a.date) - new Date(b.date)).map((c, idx) => (
+              <div key={idx}>
+                <hr />
+                <strong>{c.name} ~</strong><br/>{c.comment}  <br/><i>~ on {new Date(c.date).toLocaleDateString()}</i>
+              </div>
+            ))}
+          </div>
+          <form className="media-frame p-4 rounded border border-gray-300 bg-gray-50 mb-4" onSubmit={handleSubmit}>
             <div>
-              <h3>Messages</h3>
-              <span>TBD Send Message Button</span>
+              <label>Name:</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="border border-gray-300 rounded-sm m-1"
+              />
             </div>
-            <hr />
-            <div className="space-y-4">
-              {item.comments.map((comment) => (
-                <div
-                  key={comment.path}
-                  className="overflow-hidden rounded border border-gray-300 bg-gray-50"
-                >
-                  <h4>{comment.sender}~</h4>
-                  <div dangerouslySetInnerHTML={{ __html: comment.text }} />
-                  <span>~{comment.prettyDate}</span>
-                </div>
-              ))}
+            <div>
+              <label>Comment:</label>
+              <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                required
+                className="border border-gray-300 rounded-sm m-1 p-1"
+              />
             </div>
-          </aside>
-        )}
+            <button className="malawiFlag text-white font-bold p-1 rounded" type="submit" disabled={loading}>
+              {loading ? 'Submitting...' : 'Submit Comment'}
+            </button>
+          </form>
+        </aside>
       </div>
     </div>
   );
 }
 
-export default function EntriesContainer({ entriesItems }) {
+export default function EntriesContainer({ entriesItems, comments }) {
   return (
     <div className="w-full">
       {entriesItems.map((item) => (
-        <EntryItem key={item.path} item={item} />
+        <EntryItem key={item.path} item={item} comments={comments.filter(c => c.entry === item.title)} />
       ))}
     </div>
   );
