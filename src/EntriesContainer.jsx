@@ -25,6 +25,9 @@ function EntryItem({ item, comments }) {
     mutationObserver.observe(textRef.current, { childList: true, subtree: true });
 
     window.addEventListener('resize', syncHeight);
+
+    console.log(item.comments);
+
     return () => {
       window.removeEventListener('resize', syncHeight);
       resizeObserver.disconnect();

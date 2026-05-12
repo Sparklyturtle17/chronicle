@@ -12,6 +12,13 @@ const htmlModules = import.meta.glob('./entries/*.html', {
   import: 'default'
 });
 
+const commentsModules = import.meta.glob('./comments/*.html', { 
+  query: '?raw',
+  eager: true,
+  import: 'default'
+});
+
+
 function extractMeta(html) {
   const doc = new DOMParser().parseFromString(html, 'text/html');
   const title = doc.querySelector('title')?.textContent ?? 'Untitled';
@@ -25,11 +32,38 @@ function extractMeta(html) {
     ? Array.from(mediaEl.children).map((child) => child.outerHTML)
     : [];
 
+  const commentsItems = Object.entries(commentsModules)
+  .map(([path, html]) => ({
+    ...extractCommentsMeta(html),
+    html,
+    path
+  }))
+  .filter((comment) => comment.postId == title)
+  .sort((a, b) => new Date(b.prettyDate) - new Date(a.prettyDate));
+
   return {
     title,
     prettyDate,
     text: textEl?.innerHTML.trim() ?? '',
-    media: mediaItems
+    media: mediaItems,
+    comments: commentsItems
+  };
+}
+
+function extractCommentsMeta(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const sender = doc.querySelector('meta[name="sender"]')?.getAttribute('content') ?? 'Untitled';
+  const date = doc.querySelector('meta[name="last-updated"]')?.getAttribute('content');
+  const prettyDate = date ? new Date(date).toLocaleDateString() : '1/1/1970';
+  const postId = doc.querySelector('title')?.textContent ?? 'Untitled';
+
+  const textEl = doc.querySelector('.entry-text');
+
+  return {
+    postId,
+    sender,
+    prettyDate,
+    text: textEl?.innerHTML.trim() ?? '',
   };
 }
 
@@ -40,6 +74,8 @@ const entries = Object.entries(htmlModules)
     path
   }))
   .sort((a, b) => new Date(b.prettyDate) - new Date(a.prettyDate));
+
+
 
 export default function App() {
   const [comments, setComments] = useState([]);
