@@ -8,3 +8,6 @@ yarn-error.log*
 
 # Email configuration (keep local only)
 emails.txt
+
+# Local Netlify folder
+.netlify
