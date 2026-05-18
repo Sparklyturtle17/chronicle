@@ -9,9 +9,9 @@ export default function Title() {
           <h1 className="text-7xl font-bold">Adventures in Malawi!</h1>
         </div>
         <div className="text-right">
-          <p>If you already have Mom's phone number,</p>
-          <p>you can download whatsapp to message her.</p>
-          <p className="text-xs">-you might want to turn off auto-download photos in settings</p>
+          <p>Friends and Family - Comments are now enabled!</p>
+          <p>Please note, they will go through an approval process before appearing on the site.</p>
+          <p>Real names of Mtemba and Chiboda will not be published.</p>
         </div>
       </div>
     </div>
