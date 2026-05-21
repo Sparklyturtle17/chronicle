@@ -44,11 +44,11 @@ function EntryItem({ item, comments }) {
     setLoading(true);
     try {
       const functionUrl = import.meta.env.VITE_COMMENT_API_URL;
-      console.log(functionUrl, JSON.stringify({ name, email, comment, entry: item.title, allComments: jsonify(comments) }));
+      console.log(functionUrl, JSON.stringify({ name, email, comment, entry: item.title }));
       const response = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, comment, entry: item.title, allComments: jsonify(comments) }),
+        body: JSON.stringify({ name, email, comment, entry: item.title }),
       });
       if (!response.ok) {
         const errorText = await response.text();
