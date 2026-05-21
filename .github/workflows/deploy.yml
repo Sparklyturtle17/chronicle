@@ -22,6 +22,8 @@ jobs:
   build:
     needs: precheck
     runs-on: ubuntu-latest
+    env:
+      VITE_COMMENT_API_URL: ${{ secrets.COMMENT_URL }}
     steps:
       - uses: actions/checkout@v4
       
