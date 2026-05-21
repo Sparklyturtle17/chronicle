@@ -43,7 +43,7 @@ function EntryItem({ item, comments }) {
     }
     setLoading(true);
     try {
-      const functionUrl = '/.netlify/functions/submit-comment';
+      const functionUrl = import.meta.env.VITE_COMMENT_API_URL || '/submit-comment';
       const response = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
