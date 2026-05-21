@@ -119,7 +119,7 @@ function EntryItem({ item, comments }) {
           </div>
           <form className="media-frame p-4 rounded border border-gray-300 bg-gray-50 mb-4" onSubmit={handleSubmit}>
             <div>
-              <label>Name:</label>
+              <label>Name:</label><br></br>
               <input
                 type="text"
                 value={name}
@@ -129,7 +129,16 @@ function EntryItem({ item, comments }) {
               />
             </div>
             <div>
-              <label>Comment:</label>
+              <label>Email Address:</label><br></br>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border border-gray-200 rounded-sm m-1"
+              />
+            </div>
+            <div>
+              <label>Comment:</label><br></br>
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
