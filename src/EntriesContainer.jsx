@@ -44,6 +44,7 @@ function EntryItem({ item, comments }) {
     setLoading(true);
     try {
       const functionUrl = import.meta.env.VITE_COMMENT_API_URL || '/submit-comment';
+      console.log(functionUrl, JSON.stringify({ name, email, comment, entrySlug: item.title }));
       const response = await fetch(functionUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
