@@ -72,19 +72,32 @@ function EntryItem({ item, comments }) {
   };
 
   return (
-    <div className="entry-item">
-      <div>
-        <div>
-          <h2 className="entry-title" id={item.title}>{item.title}</h2>
-          <span className="entry-date">{item.prettyDate}</span>
-        </div>
-        <hr />
-      </div>
+    <div className="entry-item overflow-x-scroll">
 
-      <div className="entry-body flex flex-col md:flex-row md:items-start md:gap-6">
-        <div ref={textRef} className="entry-text flex-1">
-          <div dangerouslySetInnerHTML={{ __html: item.text }} />
-        </div>
+
+      <div className="entry-body flex flex-col md:flex-row md:items-start md:gap-6 overflow-x-scroll">
+          <aside
+            className="entry-media mt-4 md:mt-0 md:w-96 flex-shrink-0 overflow-y-auto"
+            style={
+              textHeight
+                ? { height: `${textHeight}px`, maxHeight: `${textHeight}px` }
+                : undefined
+            }
+          >
+
+            <div>
+              <div>
+                <h2 className="entry-title" id={item.title}>{item.title}</h2>
+                <span className="entry-date">{item.prettyDate}</span>
+              </div>
+              <hr />
+            </div>
+            <div ref={textRef} className="entry-text flex-1">
+              <div dangerouslySetInnerHTML={{ __html: item.text }} />
+            </div>
+          </aside>
+
+
 
         {item.media.length > 0 && (
           <aside
@@ -107,7 +120,14 @@ function EntryItem({ item, comments }) {
             </div>
           </aside>
         )}
-        <aside>
+          <aside
+            className="entry-media mt-4 md:mt-0 md:w-96 flex-shrink-0 overflow-y-auto"
+            style={
+              textHeight
+                ? { height: `${textHeight}px`, maxHeight: `${textHeight}px` }
+                : undefined
+            }
+          >
           <div>
             <h3>Comments</h3>
             {comments.sort((a, b) => new Date(a.date) - new Date(b.date)).map((c, idx) => (
