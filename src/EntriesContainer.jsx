@@ -73,7 +73,13 @@ function EntryItem({ item, comments }) {
 
   return (
     <div className="entry-item overflow-x-scroll">
-
+      <div>
+        <div>
+          <h2 className="entry-title" id={item.title}>{item.title}</h2>
+          <span className="entry-date">{item.prettyDate}</span>
+        </div>
+        <hr />
+      </div>
 
       <div className="entry-body flex flex-col md:flex-row md:items-start md:gap-6 overflow-x-scroll">
           <aside
@@ -85,13 +91,7 @@ function EntryItem({ item, comments }) {
             }
           >
 
-            <div>
-              <div>
-                <h2 className="entry-title" id={item.title}>{item.title}</h2>
-                <span className="entry-date">{item.prettyDate}</span>
-              </div>
-              <hr />
-            </div>
+
             <div ref={textRef} className="entry-text flex-1">
               <div dangerouslySetInnerHTML={{ __html: item.text }} />
             </div>
