@@ -71,6 +71,8 @@ function EntryItem({ item, comments }) {
     }
   };
 
+  console.log(item);
+
   return (
     <div className="entry-item overflow-x-scroll">
       <div>
