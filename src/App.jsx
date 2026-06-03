@@ -29,7 +29,13 @@ function extractMeta(html) {
   const mediaEl = doc.querySelector('.entry-media');
 
   const mediaItems = mediaEl
-    ? Array.from(mediaEl.children).map((child) => child.outerHTML)
+    ? Array.from(mediaEl.children).map((child) => {
+        const isImg = child.tagName === 'IMG';
+        return {
+          html: child.outerHTML,
+          alt: isImg ? child.getAttribute('alt') : ''
+        };
+      })
     : [];
 
   const commentsItems = Object.entries(commentsModules)
