@@ -166,3 +166,11 @@
     indent-4
     mb-4
 }
+
+.entry-text img,
+.entry-text video {
+  display: inline-block;
+  margin: 8px 4px;
+  height: 16rem;
+  width: auto;
+}

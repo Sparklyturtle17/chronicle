@@ -71,9 +71,6 @@ function EntryItem({ item, comments }) {
     }
   };
 
-  console.log(item);
-  console.log(item.alt);
-
   return (
     <div className="entry-item overflow-x-scroll">
       <div>
@@ -87,11 +84,11 @@ function EntryItem({ item, comments }) {
       <div className="entry-body flex flex-col md:flex-row md:items-start md:gap-6 overflow-x-scroll">
           <aside
             className="entry-media mt-4 md:mt-0 md:w-96 flex-shrink-0 grow overflow-y-auto"
-            style={
-              textHeight
-                ? { height: `${textHeight}px`, maxHeight: `${textHeight}px` }
-                : undefined
-            }
+            // style={
+            //   textHeight
+            //     ? { height: `${textHeight}px`, maxHeight: `${textHeight}px` }
+            //     : undefined
+            // }
           >
 
 
