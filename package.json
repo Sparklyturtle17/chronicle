@@ -12,6 +12,7 @@
     "atob": "^2.1.2",
     "btoa": "^1.2.1",
     "express": "^5.2.1",
+    "nodemailer": "^9.0.3",
     "octokat": "^0.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

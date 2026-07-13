@@ -26,8 +26,6 @@ function EntryItem({ item, comments }) {
 
     window.addEventListener('resize', syncHeight);
 
-    console.log(item.comments);
-
     return () => {
       window.removeEventListener('resize', syncHeight);
       resizeObserver.disconnect();

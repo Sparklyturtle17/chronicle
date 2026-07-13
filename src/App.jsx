@@ -79,7 +79,7 @@ const entries = Object.entries(htmlModules)
     html,
     path
   }))
-  .sort((a, b) => new Date(b.prettyDate) - new Date(a.prettyDate));
+  .sort((a, b) => new Date(a.prettyDate) - new Date(b.prettyDate));
 
 
 

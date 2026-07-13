@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const nodemailer = require('nodemailer');
-const path = require('path');
+import { existsSync, readFileSync, readdirSync } from 'fs';
+import { createTransport } from 'nodemailer';
+import { join } from 'path';
+
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function sendMergeNotification() {
     try {
@@ -17,13 +23,12 @@ async function sendMergeNotification() {
                 .filter(email => email.length > 0);
         } else {
             // Fall back to local file (for development)
-            const emailFilePath = path.join(__dirname, '../emails.txt');
-            if (!fs.existsSync(emailFilePath)) {
-                console.error('Error: EMAIL_LIST environment variable or emails.txt file not found');
+            const emailFilePath = join(__dirname, './emails.txt');
+            if (!existsSync(emailFilePath)) {
                 process.exit(1);
             }
 
-            const emailsContent = fs.readFileSync(emailFilePath, 'utf-8');
+            const emailsContent = readFileSync(emailFilePath, 'utf-8');
             emails = emailsContent
                 .split(',')
                 .map(email => email.trim())
@@ -31,7 +36,6 @@ async function sendMergeNotification() {
         }
 
         if (emails.length === 0) {
-            console.error('Error: No valid email addresses found in emails.txt');
             process.exit(1);
         }
 
@@ -47,9 +51,34 @@ async function sendMergeNotification() {
             .replace('[notify]', '')
             .trim();
 
+        const entriesDir = join(__dirname, '../src/entries');
+        let mostRecentEntryTitle = 'Untitled';
+
+        if (existsSync(entriesDir)) {
+            const entries = readdirSync(entriesDir)
+                .filter(f => f.endsWith('.html'))
+                .map(file => {
+                    const html = readFileSync(join(entriesDir, file), 'utf-8');
+                    const titleMatch = html.match(/<title>(.*?)<\/title>/i);
+                    const dateMatch = html.match(/<meta\s+name=["']last-updated["']\s+content=["'](.*?)["']/i);
+                    const prettyDate = dateMatch ? new Date(dateMatch[1]).toLocaleDateString() : '1/1/1970';
+                    return {
+                        title: titleMatch ? titleMatch[1].trim() : 'Untitled',
+                        prettyDate,
+                    };
+                })
+                .sort((a, b) => new Date(b.prettyDate) - new Date(a.prettyDate));
+            
+            if (entries.length > 0) {
+                mostRecentEntryTitle = entries[0].title;
+            }
+        }
+
+        const scrolledLink = 'https://sparklyturtle17.github.io/chronicle/#scrollTo=' + encodeURIComponent(mostRecentEntryTitle);
+
         // Configure email transporter
         // Using Gmail as example - you can change to your email service
-        const transporter = nodemailer.createTransport({
+        const transporter = createTransport({
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL_USER,
@@ -64,7 +93,7 @@ async function sendMergeNotification() {
             <p>Adventures in Malawi has been updated with a new post:</p>
             <p><strong>Message:</strong> ${displayMessage}</p>
             <p>Visit the live site to see the latest changes:</p>
-            <p><a href="https://sparklyturtle17.github.io/chronicle/">https://sparklyturtle17.github.io/chronicle/</a></p>
+            <p><a href=${scrolledLink}>https://sparklyturtle17.github.io/chronicle/</a></p>
         `;
 
         const emailText = `
@@ -76,27 +105,17 @@ async function sendMergeNotification() {
             https://chronicle.adventuresinmalawi.com
         `;
 
-        // Send emails
-        console.log(`Sending notification emails to ${emails.length} recipient(s)...`);
-
         for (const email of emails) {
-            try {
-                await transporter.sendMail({
-                    from: process.env.EMAIL_USER,
-                    to: email,
-                    subject: emailSubject,
-                    text: emailText,
-                    html: emailHTML,
-                });
-                console.log(`✓ Email sent to ${email}`);
-            } catch (error) {
-                console.error(`✗ Failed to send email to ${email}:`, error.message);
-            }
+            await transporter.sendMail({
+                from: process.env.EMAIL_USER,
+                to: email,
+                subject: emailSubject,
+                text: emailText,
+                html: emailHTML,
+            });
         }
 
-        console.log('Email notification process completed');
     } catch (error) {
-        console.error('Error sending emails:', error.message);
         process.exit(1);
     }
 }
