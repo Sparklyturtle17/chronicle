@@ -96,17 +96,17 @@ export default function App() {
 
   return (
     <div className="fullpage">
-      <div className="title" id="title-header">
-        <Title></Title>
-      </div>
       <div className="flex flex-col md:flex-row gap-4 m-4">
-        <Menu menuItems={entries} />
+        <Menu menuItems={entries.toReversed()} />
         <div>
+          <div className="title" id="title-header">
+            <Title></Title>
+          </div>
           <EntriesContainer entriesItems={entries} comments={comments} />
+          <div className="footer" id="footer-sticky">
+            <Footer></Footer>
+          </div>
         </div>
-      </div>
-      <div className="footer" id="footer-sticky">
-        <Footer></Footer>
       </div>
     </div>
   )

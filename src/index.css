@@ -5,16 +5,25 @@
 
 /* Custom component styles */
 .fullpage {
-  @apply min-h-screen;
-  background: linear-gradient(to bottom, 
-    black 0%, 
-    black 25%, 
-    red 33%, 
-    red 58%, 
-    green 75%, 
+  min-height: 100vh;
+  position: relative;
+}
+
+.fullpage::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom,
+    black 0%,
+    black 25%,
+    red 33%,
+    red 58%,
+    green 75%,
     green 100%
   );
 }
+
 .title {
   @apply 
     font-bold 
