@@ -1,4 +1,4 @@
-export default function Title() {
+export default function Title({newestEntryTitle}) {
   return (
     <div className="flex items-stretch gap-4">
       <div className="flex-shrink-0">
@@ -9,9 +9,7 @@ export default function Title() {
           <h1 className="text-7xl font-bold">Adventures in Malawi!</h1>
         </div>
         <div className="text-right">
-          <p>Friends and Family - Comments are now enabled!</p>
-          <p>Please note, they will go through an approval process before appearing on the site.</p>
-          <p>Real names of Mtemba and Chiboda will not be published.</p>
+          <a className="notification" href={`#${newestEntryTitle}`}>Newest Entry: {newestEntryTitle}!</a>
         </div>
       </div>
     </div>

@@ -81,7 +81,7 @@ const entries = Object.entries(htmlModules)
   }))
   .sort((a, b) => new Date(a.prettyDate) - new Date(b.prettyDate));
 
-
+const newestEntryTitle = entries.toReversed()[0].title;
 
 export default function App() {
   const [comments, setComments] = useState([]);
@@ -100,9 +100,9 @@ export default function App() {
         <Menu menuItems={entries.toReversed()} />
         <div>
           <div className="title" id="title-header">
-            <Title></Title>
+            <Title newestEntryTitle={newestEntryTitle}/>
           </div>
-          <EntriesContainer entriesItems={entries} comments={comments} />
+          <EntriesContainer entriesItems={entries} comments={comments} newestEntryTitle={newestEntryTitle}/>
           <div className="footer" id="footer-sticky">
             <Footer></Footer>
           </div>
