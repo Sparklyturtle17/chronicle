@@ -193,4 +193,13 @@
     shadow-gray-600
     border-2
     border-gray-800
+    hover:border-gray-600
+    focus:border-gray-600
+    active:border-gray-600
+    hover:shadow-sm
+    focus:shadow-sm
+    active:shadow-sm
+    hover:bg-green-500
+    focus:bg-green-500
+    active:bg-green-500
 }
